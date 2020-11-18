@@ -1,8 +1,8 @@
+import { render } from '@testing-library/react';
 import React, { useState } from 'react';
 import './App.css';
-import Display from "./Display";
 
-export default function App2(){
+const App3 = () =>{
     const [score, setScore] = useState(0);
 
     const [questions, setQuestions] = useState([
@@ -36,52 +36,47 @@ export default function App2(){
         }
       ]);
 
-      const displayQuestion = (index) =>{
+    const Display = (index) =>{
         const question = questions[index];
-        if(score < index ){return;}
-        return(
-          <div className="question-display" key={`q-${index}`}>
+        return (
+        <div className="question-display" key={`q-${index}`}>
             <p className="question">
-              {question.question}
+            {question.question}
             </p>
             <br/>
             {question.possibleAnswers.map((answer, answerIndex) => (
-              <button key={`q-${index}-a-${answerIndex}`} className="question-choice" onClick={() =>
-              answerQuestion(index,answer)}> 
+            <button key={`q-${index}-a-${answerIndex}`} className="question-choice" onClick={() =>
+                answerQuestion(index, answer)
+            }>
                 {answer}
-              </button>
+            </button>
             ))}
             {displayResult(index)}
-          </div>
+        </div>
         );
-      }
+    }
     
-      const answerQuestion = (index, choice) => {
+    const answerQuestion = (index, choice) =>{
         const answeredQuestion = questions[index];
         answeredQuestion.playerChoice = choice;
     
         const allQuestions = questions;
     
         allQuestions[index] = answeredQuestion;
-    
-        //this.setState({
-            setQuestions({allQuestions});
-          //questions: allQuestions
-        //}, () => {
-        //  updatePlayerScore();
-        //})
+        
+        setQuestions({allQuestions});
         {updatePlayerScore()}
-      }
-    
-      const updatePlayerScore = () => {
+    }
+
+    const updatePlayerScore = () =>{
         const playerScore = questions.filter(q => q.rightAnswer === q.playerChoice).length;
     
         setScore({playerScore});
     
         console.log("New player score: ", playerScore)
-      }
-    
-      const displayResult = (index) => {
+    }
+
+    const displayResult = (index) => {
         const question = questions[index];
     
         if(!question.playerChoice){ return;}
@@ -101,29 +96,31 @@ export default function App2(){
         }
       }
     
-      //...
-      const renderQuestions = () => {
+    const renderQuestions = () =>{
         return questions.map((question, index) => (
-            <li key={index}> 
-                {displayQuestion(index)}
-            </li>    
-        ));
-      }
-    
+                <div key={question.id}>
+                    {Display(index)}
+                </div>
+            )
+        );
+    }
+
     return (
         <div className="App">
             <h1>Quiz Show!</h1>
             <hr/>
             <>
-              <ul>
-                  {questions.map((question, index) => (
-                    <div key={question.id}>
-                      <Display index={index} questions={questions} score={score} />
-                    </div>)
-                  )}
-              </ul>
+                <ul>
+                    {questions.map((question, index) => (
+                        <div key={question.id}>
+                            {Display(index)}
+                        </div>
+                    ))}
+                    {renderQuestions()}
+                </ul>
             </>
-            
         </div>
     );
 }
+
+export default App3;

@@ -38,6 +38,7 @@ const App3 = () =>{
 
     const Display = (index) =>{
         const question = questions[index];
+        if(score < index){return;}
         return (
         <div className="question-display" key={`q-${index}`}>
             <p className="question">
@@ -97,11 +98,12 @@ const App3 = () =>{
       }
     
     const renderQuestions = () =>{
-        return questions.map((question, index) => (
-                <div key={question.id}>
-                    {Display(index)}
-                </div>
-            )
+      return (
+          questions.map((question, index) => (
+            <div key={question.id}>
+              {Display(index)}
+            </div>
+          ))
         );
     }
 
@@ -109,16 +111,7 @@ const App3 = () =>{
         <div className="App">
             <h1>Quiz Show!</h1>
             <hr/>
-            <>
-                <ul>
-                    {questions.map((question, index) => (
-                        <div key={question.id}>
-                            {Display(index)}
-                        </div>
-                    ))}
-                    {renderQuestions()}
-                </ul>
-            </>
+            {renderQuestions()}
         </div>
     );
 }

@@ -11,7 +11,11 @@ const Display = (props) =>{
         </p>
         <br/>
         {question.possibleAnswers.map((answer, answerIndex) => (
-          <button key={`q-${props.index}-a-${answerIndex}`} className="question-choice">
+          <button key={`q-${props.index}-a-${answerIndex}`} className="question-choice"onClick={
+            props.score = () =>{
+              
+            }
+          }>
             {answer}
           </button>
         ))}

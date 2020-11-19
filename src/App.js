@@ -37,7 +37,9 @@ class App extends Component {
 
   displayQuestion(index){
     const question = this.state.questions[index];
-    if(this.state.playerScore < index ){return;}
+    if(this.state.playerScore < index ){
+      return;
+    }
     return(
       <div className="question-display" key={`q-${index}`}>
         <p className="question">
